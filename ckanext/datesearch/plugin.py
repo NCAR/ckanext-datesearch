@@ -23,8 +23,8 @@ class DateSearchPlugin(plugins.SingletonPlugin):
         if not extras:
             # There are no extras in the search params, so do nothing.
             return search_params
-        start_date = extras.get('ext_startdate')
-        end_date = extras.get('ext_enddate')
+        start_date = extras.get('ext_pub_start')
+        end_date = extras.get('ext_pub_end')
         if not start_date and not end_date:
             # The user didn't select either a start and/or end date, so do nothing.
             return search_params

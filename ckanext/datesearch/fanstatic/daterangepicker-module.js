@@ -9,30 +9,30 @@ this.ckan.module('daterangepicker-module', function ($) {
             };
 
             // Pick out relevant parameters
-            var param_start = $.urlParam('ext_startdate');
-            var param_end = $.urlParam('ext_enddate');
+            var param_start = $.urlParam('ext_pub_start');
+            var param_end = $.urlParam('ext_pub_end');
 
             // Populate the datepicker and hidden fields
             if (param_start) {
                 $('#start').val(moment.utc(param_start).year());
-                $('#ext_startdate').val(param_start);
+                $('#ext_pub_start').val(param_start);
             }
             if (param_end) {
                 $('#end').val(moment.utc(param_end).year());
-                $('#ext_enddate').val(param_end);
+                $('#ext_pub_end').val(param_end);
             }
 
-            // Add hidden <input> tags #ext_startdate and #ext_enddate, if they don't already exist.
+            // Add hidden <input> tags #ext_pub_start and #ext_pub_end, if they don't already exist.
             var form = $("#dataset-search");
             // CKAN 2.1
             if (!form.length) {
                 form = $(".search-form");
             }
-            if ($("#ext_startdate").length === 0) {
-                $('<input type="hidden" id="ext_startdate" name="ext_startdate" />').appendTo(form);
+            if ($("#ext_pub_start").length === 0) {
+                $('<input type="hidden" id="ext_pub_start" name="ext_pub_start" />').appendTo(form);
             }
-            if ($("#ext_enddate").length === 0) {
-                $('<input type="hidden" id="ext_enddate" name="ext_enddate" />').appendTo(form);
+            if ($("#ext_pub_end").length === 0) {
+                $('<input type="hidden" id="ext_pub_end" name="ext_pub_end" />').appendTo(form);
             }
 
 	        var earliest_publication_year = this.options.earliest_publication_year.toString();
@@ -53,12 +53,12 @@ this.ckan.module('daterangepicker-module', function ($) {
                 var end_date = moment(end_date_str, "YYYY");
                 //Flip the dates if end date is before start date, this ensures correct order in search view for results.
                 if(end_date_str && (start_date > end_date)) {
-                    $('#ext_startdate').val(end_date.format(fs) + 'Z');
+                    $('#ext_pub_start').val(end_date.format(fs) + 'Z');
                     start_date.add('y', 1).subtract('s', 1);
-                    $('#ext_enddate').val(start_date.format(fs) + 'Z');
+                    $('#ext_pub_end').val(start_date.format(fs) + 'Z');
                 }
                 else {
-                    $('#ext_startdate').val(start_date.utc().format(fs) + 'Z');
+                    $('#ext_pub_start').val(start_date.utc().format(fs) + 'Z');
                 }
                 form.submit();
             });
@@ -79,13 +79,13 @@ this.ckan.module('daterangepicker-module', function ($) {
                 var start_date = moment(start_date_str, "YYYY");
                 //Flip the dates if end date is before start date, this ensures correct order in search view for results.
                 if(start_date_str && (end_date < start_date)) {
-                    $('#ext_startdate').val(end_date.format(fs) + 'Z');
+                    $('#ext_pub_start').val(end_date.format(fs) + 'Z');
                     start_date.add('y', 1).subtract('s', 1);
-                    $('#ext_enddate').val(start_date.format(fs) + 'Z');
+                    $('#ext_pub_end').val(start_date.format(fs) + 'Z');
                 }
                 else {
                     end_date.add('y', 1).subtract('s', 1);
-                    $('#ext_enddate').val(end_date.format(fs) + 'Z');
+                    $('#ext_pub_end').val(end_date.format(fs) + 'Z');
                 }
                 form.submit();
             });
