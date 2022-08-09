@@ -23,15 +23,21 @@ class DateSearchPlugin(plugins.SingletonPlugin):
         if not extras:
             # There are no extras in the search params, so do nothing.
             return search_params
-        start_date = extras.get('ext_pub_start')
-        end_date = extras.get('ext_pub_end')
-        if not start_date and not end_date:
+        start_year = extras.get('ext_pub_start')
+        end_year = extras.get('ext_pub_end')
+        if not start_year and not end_year:
             # The user didn't select either a start and/or end date, so do nothing.
             return search_params
-        if not start_date:
+        if start_year:
+            start_date = start_year + '-01-01T00:00:00Z'
+        else:
             start_date = '*'
-        if not end_date:
+
+        if end_year:
+            end_date = end_year + '-12-31T23:59:59Z'
+        else:
             end_date = '*'
+            
         # Add a date-range query with the selected start and/or end dates into the Solr facet queries.
         fq = search_params.get('fq', '')
         fq = '{fq} +extras_publication_date:[{sd} TO {ed}]'.format(fq=fq, sd=start_date, ed=end_date)
