@@ -37,7 +37,7 @@ class DateSearchPlugin(plugins.SingletonPlugin):
             end_date = end_year + '-12-31T23:59:59Z'
         else:
             end_date = '*'
-            
+
         # Add a date-range query with the selected start and/or end dates into the Solr facet queries.
         fq = search_params.get('fq', '')
         fq = '{fq} +extras_publication_date:[{sd} TO {ed}]'.format(fq=fq, sd=start_date, ed=end_date)
