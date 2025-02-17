@@ -16,7 +16,7 @@ class DateSearchPlugin(plugins.SingletonPlugin):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_resource('fanstatic', 'ckanext-datesearch')
 
-    def before_search(self, search_params):
+    def before_dataset_search(self, search_params):
         """ This function adds the publication_date from the extras url parameters to the solr
                 search parameters and returns control to CKAN Package Controller """
         extras = search_params.get('extras')
